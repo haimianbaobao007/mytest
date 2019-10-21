@@ -1,20 +1,19 @@
 package com.example.util;
 
-import javax.lang.model.element.NestingKind;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtil {
 
-    public static void main(String[] args){
-         String filePath="D:\\httpfile";
-         String fileName="patch.txt";
-         storageFile(filePath,fileName);
-    }
-
-
-    public static void storageFile(String filePath,String fileName)  {
+    /**
+     * 储存文件
+     * @param filePath 文件目录
+     * @param fileName 文件名
+     * @param bytes 文件字节码
+     */
+    public static void storageFile(String filePath, String fileName, byte[] bytes)  {
         try {
             File direct = new File(filePath);
             if(!direct.isDirectory()){
@@ -25,9 +24,8 @@ public class FileUtil {
                     // 创建文件
                     file.createNewFile();
             }
-
             FileOutputStream fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(WebSiteGetUtil.getWbsiteString("https://www.baidu.com/",WebSiteGetUtil.GET).toString().getBytes());
+            fileOutputStream.write(bytes);
             fileOutputStream.flush();
             fileOutputStream.close();
         } catch (IOException e) {
@@ -35,8 +33,25 @@ public class FileUtil {
         }
     }
 
+    public static void readFile(){
 
+        try {
+            String filePath="D:\\httpfile\\img.jpg";
+            String outPath="D:\\httpfile\\imgtext.jpg";
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            FileOutputStream fileOutputStream = new FileOutputStream(outPath);
+            int a=0;
+            StringBuilder stringBuilder= new StringBuilder();
+            while ((a=fileInputStream.read())!=-1){
+                fileOutputStream.write(a);
+                System.out.println(a);
+            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 }

@@ -11,14 +11,10 @@ public class WebSiteGetUtil {
     public final static String POST="POST";
 
 
-    public static void main(String[] args){
-         getWbsiteString("https://www.baidu.com/",WebSiteGetUtil.GET);
-    }
 
      public static StringBuilder getWbsiteString(String httpUrl,String Method) {
          StringBuilder stringBuilder = new StringBuilder();
          HttpURLConnection httpURLConnection=null;
-         URLConnection urlConnection=null;
          InputStream inputStream=null;
          BufferedReader bf=null;
          try {
@@ -28,8 +24,8 @@ public class WebSiteGetUtil {
              httpURLConnection.setConnectTimeout(15000);
              httpURLConnection.setReadTimeout(60000);
              httpURLConnection.connect();
+             inputStream=httpURLConnection.getInputStream();
              if(httpURLConnection.getResponseCode()==200){
-                 inputStream=httpURLConnection.getInputStream();
                  bf=new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
                  String temp=null;
                  while ((temp=bf.readLine())!=null){
