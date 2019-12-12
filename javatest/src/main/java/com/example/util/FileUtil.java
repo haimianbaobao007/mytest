@@ -50,8 +50,25 @@ public class FileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+
+     public static void createFile(String filePath,String fileName){
+        try {
+            File direct = new File(filePath);
+            if(!direct.isDirectory()){
+                direct.mkdirs();
+            }
+            File file=new File(new File(filePath),fileName);
+            if(!file.exists()){
+                // 创建文件
+                file.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+     }
 
 }

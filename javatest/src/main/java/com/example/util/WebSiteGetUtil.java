@@ -47,6 +47,41 @@ public class WebSiteGetUtil {
 
 
 
+    public static void getWbsiteBytes(String httpUrl,String Method,String fileUrl,String fileName) {
+        StringBuilder stringBuilder = new StringBuilder();
+        HttpURLConnection httpURLConnection=null;
+        InputStream inputStream=null;
+        InputStreamReader inputStreamReader = null;
+        try {
+            URL url = new URL(httpUrl);
+            httpURLConnection= (HttpURLConnection)url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setConnectTimeout(15000);
+            httpURLConnection.setReadTimeout(60000);
+            httpURLConnection.connect();
+            inputStream=httpURLConnection.getInputStream();
+            FileUtil.createFile(fileUrl,fileName);
+            FileOutputStream fileOutputStream = new FileOutputStream(fileUrl+"\\"+fileName);
+            if(httpURLConnection.getResponseCode()==200){
+                byte[] bytes=new byte[1024];
+                while (inputStream.read(bytes)!=-1){
+                       fileOutputStream.write(bytes);
+                }
+                // 关闭流
+                if(inputStream!=null) {
+                    inputStream.close();
+                }
+                if(fileOutputStream!=null){
+                    fileOutputStream.close();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
 }

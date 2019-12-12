@@ -54,18 +54,22 @@ public class TheardTest {
     public static void addTwo(List<Integer> list){
         Map<Integer, List<Integer>> map = batchList(list, 100000);
              int num = 1;
+             List list1=new ArrayList();
              List<Thread> threadList = new ArrayList<Thread>();
             for (List<Integer> valuesList : map.values()) {
-               Thread thread= new Thread(() -> {
-                      int count=0;
-                      for (Integer i : valuesList) {
-                          count += doit();
-                      }
-                      sum.addAndGet(count);
-                });
+               Thread thread= new Thread(new Runnable() {
+                   @Override
+                   public void run() {
+                       int count=0;
+                       for (Integer i : valuesList) {
+                           count += doit();
+                       }
+                       sum.addAndGet(count);
+                   }
+               });
                threadList.add(thread);
                thread.start();
-                num++;
+               num++;
             }
             for(Thread thread:threadList){
                 try {
